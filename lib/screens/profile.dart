@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/styles.dart';
 import '../widgets/ui_kit.dart';
+import 'notification_screen.dart'; // <--- IMPORT YOUR NEW FILE HERE
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,8 +23,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const Text("Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: const Center(child: Text("Settings", style: TextStyle(color: Colors.white))),
-        actions: const [
-          Center(child: Padding(padding: EdgeInsets.only(right: 16), child: Text("Logout", style: TextStyle(color: Colors.white))))
+        actions: [
+          // --- NEW NOTIFICATION BUTTON START ---
+          IconButton(
+            icon: const Icon(Icons.notifications, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NotificationScreen()),
+              );
+            },
+          ),
+          // --- NEW NOTIFICATION BUTTON END ---
+
+          const Center(
+              child: Padding(
+                padding: EdgeInsets.only(right: 16, left: 8),
+                child: Text("Logout", style: TextStyle(color: Colors.white)),
+              )
+          )
         ],
       ),
       body: Column(
@@ -41,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.grey[300],
-                    backgroundImage: const NetworkImage("https://i.pravatar.cc/300"), // Placeholder
+                    backgroundImage: const NetworkImage("https://i.pravatar.cc/300"),
                   ),
                 ),
               ),
