@@ -19,9 +19,9 @@ class MarketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Product> hotDeals = [
-      Product(name: " Eco-Friendly Charge Lantern", price: 59.99, imagePath: "assets/products/charge_lantern.png"),
-      Product(name: "Smart Energy Savings Bulbs", price: 120.00, imagePath: "assets/products/smart-bulbs.png"),
-      Product(name: "Re-spin Record Player", price: 85.50, imagePath: "assets/products/respin_record-player.png"),
+      Product(name: " Premium Cloth Napkins", price: 59.99, imagePath: "assets/products/8.-Cloth-Napkins.png"),
+      Product(name: "Refillable-Glass Soap Dispensers", price: 120.00, imagePath: "assets/products/2.-Refillable-Glass-Soap-Dispensers.jpeg"),
+      Product(name: "Reusable Beewax Food Wraps", price: 85.50, imagePath: "assets/products/1.-Reusable-Beeswax-Food-Wraps.jpeg"),
       Product(name: "Stainless Steel Straws", price: 30.00, imagePath: "assets/products/12.-Stainless-Steel-Straws.jpeg"),
     ];
 

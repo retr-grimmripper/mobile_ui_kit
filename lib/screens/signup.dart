@@ -43,22 +43,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const CustomInput(label: "Password", isPassword: true),
             const SizedBox(height: 20),
 
-            Expanded(
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: _agreedToPrivacy,
-                    activeColor: Color(0xFF5DB075),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    onChanged: (value) {
-                      setState(() {
-                        _agreedToPrivacy = value!;
-                      });
-                    },
+            Row(
+              children: [
+                Checkbox(
+                  value: _agreedToPrivacy,
+                  activeColor: const Color(0xFF5DB075),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  onChanged: (value) {
+                    setState(() {
+                      _agreedToPrivacy = value!;
+                    });
+                  },
+                ),
+                const Expanded(
+                  child: Text(
+                    "I would like to receive your newsletter and promotional information.",
+                    style: TextStyle(color: Colors.grey),
                   ),
-                  Text("I would like to receive your newsletter and promotional information.", style: TextStyle(color: Colors.grey[600]), textAlign: TextAlign.left, overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 32),
             PrimaryButton(text: "Sign Up", onPressed: () {
@@ -69,8 +72,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onPressed: () {},
               child: const Text("Forgot your password?", style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
             ),
-
-            SizedBox.fromSize(),
             const Text("Already have an account?", style: TextStyle(color: Colors.grey)),
             TextButton(
                 onPressed: () {

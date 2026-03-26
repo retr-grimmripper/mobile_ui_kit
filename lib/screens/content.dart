@@ -24,10 +24,19 @@ class Post {
   });
 }
 
+final List<String> myImages = [
+  "assets/products/phonecase.png",
+  "assets/products/smart-bulbs.png",
+  "assets/products/sodastream.png",
+  "assets/products/thefabric.png",
+  "assets/products/charge_lantern.png",
+];
+
+
 final List<Post> dummyPosts = List.generate(
   5,
       (index) => Post(
-    imagePath: "assets/products/19.-Eco-Friendly-Paint.jpeg",
+    imagePath: myImages[index],
     title: "Eco Friendly Paint $index",
     author: "Author Name",
     description: "He'll want to use your yacht, and I don't want this thing smelling like fish.",
@@ -124,12 +133,14 @@ class ContentScreen extends StatelessWidget {
           children: [
             const _CustomHeader(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0, vertical: 10),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SearchScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const SearchScreen()),
                   );
                 },
                 child: Container(
@@ -189,6 +200,12 @@ class ContentScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(8),
+              // --- THE FIX STARTS HERE ---
+              image: DecorationImage(
+                image: AssetImage(post.imagePath),
+                fit: BoxFit.cover, // Ensures image fills the box
+              ),
+              // --- THE FIX ENDS HERE ---
             ),
           ),
           const SizedBox(height: 12),
@@ -207,7 +224,6 @@ class ContentScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               PostActionsRow(post: post),
-
               Text(
                 post.time,
                 style: TextStyle(color: Colors.grey[400], fontSize: 12),
@@ -249,9 +265,16 @@ class PostDetailScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
                   borderRadius: BorderRadius.circular(8),
+                  // --- THE FIX STARTS HERE ---
+                  image: DecorationImage(
+                    image: AssetImage(post.imagePath),
+                    fit: BoxFit.cover,
+                  ),
+                  // --- THE FIX ENDS HERE ---
                 ),
               ),
               const SizedBox(height: 24),
+              // ... Rest of your code remains the same ...
               Text(
                 post.title,
                 style: const TextStyle(
@@ -269,10 +292,7 @@ class PostDetailScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16, height: 1.5, color: Colors.grey[600]),
               ),
               const SizedBox(height: 20),
-
               const Divider(),
-
-
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: PostActionsRow(post: post),

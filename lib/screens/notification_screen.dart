@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import '../theme/styles.dart'; // Uncomment if you have your styles file
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -16,9 +15,8 @@ class NotificationScreen extends StatelessWidget {
             "Notifications",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
         ),
-        // Custom Back Button to match your theme
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF5DB075)), // Green color from your previous screens
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF5DB075)),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
@@ -40,7 +38,6 @@ class NotificationScreen extends StatelessWidget {
   }
 }
 
-// Simple widget for the individual notification row
 class _NotificationTile extends StatelessWidget {
   final Map<String, dynamic> item;
   const _NotificationTile({required this.item});
@@ -52,7 +49,6 @@ class _NotificationTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Avatar
           Container(
             width: 45,
             height: 45,
@@ -66,7 +62,6 @@ class _NotificationTile extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // Text Content
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +89,6 @@ class _NotificationTile extends StatelessWidget {
               ],
             ),
           ),
-          // Optional: Show a preview image if they commented on a photo
           if (item['hasPreview'])
             Container(
               width: 40,
@@ -111,7 +105,6 @@ class _NotificationTile extends StatelessWidget {
   }
 }
 
-// Dummy Data
 final List<Map<String, dynamic>> _dummyNotifications = [
   {
     "name": "Kevin H.",

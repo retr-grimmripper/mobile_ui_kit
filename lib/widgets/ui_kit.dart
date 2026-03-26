@@ -25,18 +25,43 @@ class PrimaryButton extends StatelessWidget {
   }
 }
 
-class CustomInput extends StatelessWidget {
+
+
+class CustomInput extends StatefulWidget {
   final String label;
   final bool isPassword;
+  final TextEditingController? controller;
 
-  const CustomInput({super.key, required this.label, this.isPassword = false});
+  const CustomInput({
+    super.key,
+    required this.label,
+    this.isPassword = false,
+    this.controller,
+  });
+
+  @override
+  State<CustomInput> createState() => _CustomInputState();
+}
+
+class _CustomInputState extends State<CustomInput> {
+  // 2. A variable to track if the text should be hidden right now
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    // 3. Set the initial state based on what you passed in
+    _obscureText = widget.isPassword;
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      obscureText: isPassword,
+      controller: widget.controller,
+      // 4. Bind the obscureText property to our changing variable
+      obscureText: _obscureText,
       decoration: InputDecoration(
-        hintText: label,
+        hintText: widget.label,
         hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
         filled: true,
         fillColor: AppColors.inputBackground,
@@ -53,8 +78,25 @@ class CustomInput extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.primary),
         ),
-        suffixText: isPassword ? "Show" : null,
-        suffixStyle: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+
+        // 5. Swap suffixText for a clickable suffixIcon
+        suffixIcon: widget.isPassword
+            ? TextButton(
+          onPressed: () {
+            // 6. The Magic: Toggle the boolean and tell Flutter to rebuild!
+            setState(() {
+              _obscureText = !_obscureText;
+            });
+          },
+          child: Text(
+            _obscureText ? "Show" : "Hide", // Changes text dynamically
+            style: const TextStyle(
+              color: AppColors.primary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
+            : null,
       ),
     );
   }

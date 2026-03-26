@@ -85,7 +85,7 @@ class FeedScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Header", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text("Switch to Eco Today!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   Text("8m ago", style: TextStyle(color: Color(0xFFBDBDBD), fontSize: 14)),
                 ],
               ),

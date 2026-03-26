@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../lib/providers/user_provider.dart';
 import '../theme/styles.dart';
 import '../widgets/ui_kit.dart';
-import 'notification_screen.dart'; // <--- IMPORT YOUR NEW FILE HERE
+import 'notification_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool showPosts = true;
 
   @override
   Widget build(BuildContext context) {
+    final userName = ref.watch(userNameProvider);
+    final userMantra = ref.watch(userMantraProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -24,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: const Center(child: Text("Settings", style: TextStyle(color: Colors.white))),
         actions: [
-          // --- NEW NOTIFICATION BUTTON START ---
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.white),
             onPressed: () {
@@ -34,7 +38,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             },
           ),
-          // --- NEW NOTIFICATION BUTTON END ---
 
           const Center(
               child: Padding(
@@ -59,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.grey[300],
-                    backgroundImage: const NetworkImage("https://i.pravatar.cc/300"),
+                    backgroundImage: Image.asset("assets/images/profile.png").image,
                   ),
                 ),
               ),
@@ -67,9 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 70),
 
-          Text("Victoria Robertson", style: AppText.header1),
+          Text(userName, style: AppText.header1),
           const SizedBox(height: 8),
-          Text("A mantra goes here", style: AppText.body.copyWith(fontWeight: FontWeight.bold)),
+          Text(userMantra, style: AppText.body.copyWith(fontWeight: FontWeight.bold)),
 
           Padding(
             padding: const EdgeInsets.all(16.0),
