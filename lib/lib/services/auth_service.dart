@@ -1,37 +1,34 @@
-import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  static const String _boxName = 'authBox';
-  static const String _tokenKey = 'authToken';
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Initialize Hive and open the authentication box
-  static Future<void> init() async {
-    await Hive.initFlutter();
-    await Hive.openBox(_boxName);
-  }
-
-  // Check if the user is currently logged in
-  static bool get isLoggedIn {
-    return Hive.box(_boxName).containsKey(_tokenKey);
-  }
-
-  // Simulate a login request
-  static Future<bool> login(String email, String password) async {
-    // Simulate network delay for a REST API call
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Basic validation
-    if (email.isNotEmpty && password.isNotEmpty) {
-      final box = Hive.box(_boxName);
-      await box.put(_tokenKey, 'dummy_secure_token_123');
-      return true;
+  // 1. SIGN UP (This is the method that was missing!)
+  static Future<String?> signUp({required String email, required String password}) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      return null; // Return null if successful
+    } on FirebaseAuthException catch (e) {
+      return e.message; // Return the Firebase error message
+    } catch (e) {
+      return "An unknown error occurred.";
     }
-    return false;
   }
 
-  // Clear the token to log out
+  // 2. LOGIN
+  static Future<String?> login({required String email, required String password}) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return null; // Return null if successful
+    } on FirebaseAuthException catch (e) {
+      return e.message; // Return the Firebase error message
+    } catch (e) {
+      return "An unknown error occurred.";
+    }
+  }
+
+  // 3. LOGOUT
   static Future<void> logout() async {
-    final box = Hive.box(_boxName);
-    await box.delete(_tokenKey);
+    await _auth.signOut();
   }
 }

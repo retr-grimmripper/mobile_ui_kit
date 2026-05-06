@@ -10,39 +10,25 @@ import 'screens/insights.dart';
 import 'screens/login.dart';
 import 'screens/content.dart';
 import 'lib/services/auth_service.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
+import 'screens/notification_screen.dart';
 
 void main() async {
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    await AuthService.init();
+  // 1. MUST BE FIRST: Tells Flutter to wake up before starting Firebase
+  WidgetsFlutterBinding.ensureInitialized();
 
-    runApp(
-      const ProviderScope(
-        child: MyApp(),
-      ),
-    );
+  // 2. Start Firebase securely
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  } catch (e, stacktrace) {
-    print("❌ CRITICAL CRASH DURING STARTUP: $e");
-
-    runApp(
-      MaterialApp(
-        home: Scaffold(
-          backgroundColor: Colors.white,
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Text(
-                "App failed to start.\nError: $e",
-                style: const TextStyle(color: Colors.red, fontSize: 16),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // 3. Run the App
+  runApp(const ProviderScope(child: MyApp()));
 }
+
 
 
 class MyApp extends StatelessWidget {
@@ -54,19 +40,49 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Store-Socio',
 
-      initialRoute: '/signup',
+      // THE FONT FIX: This forces the browser to use a safe native font
+      theme: ThemeData(
+        fontFamily: 'system-ui',
+        primarySwatch: Colors.green,
+        scaffoldBackgroundColor: Colors.grey[50],
+      ),
+
       routes: {
-        '/signup' : (context) => const SignUpScreen(),
-        '/login' : (context) => const LoginScreen(),
-        '/homepage' : (context) => const HomePage(),
-        '/content' : (context) => const ContentScreen(),
-        '/profile' : (context) => const ProfileScreen(),
-        '/market' : (context) => const MarketScreen(),
-        '/feed' : (context) => const FeedScreen(),
-        '/insights' : (context) => const InsightsScreen(),
-        '/notifications' : (context) => const NotificationScreen()
+        '/signup': (context) => const SignUpScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/homepage': (context) => const HomePage(),
+        '/content': (context) => const ContentScreen(),
+        '/profile': (context) => const ProfileScreen(),
+        '/market': (context) => const MarketScreen(),
+        '/feed': (context) => const FeedScreen(),
+        '/insights': (context) => const InsightsScreen(),
+        '/notifications': (context) => const NotificationScreen()
       },
-      home: AuthService.isLoggedIn ? const HomePage() : const LoginScreen(),
+
+      // THE ROUTING FIX: Smoothly handles Firebase loading states
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(child: Text("Firebase Error: ${snapshot.error}")),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(child: CircularProgressIndicator(color: Colors.green)),
+            );
+          }
+
+          if (snapshot.hasData) {
+            return const HomePage();
+          }
+
+          return const LoginScreen();
+        },
+      ),
     );
   }
 }
