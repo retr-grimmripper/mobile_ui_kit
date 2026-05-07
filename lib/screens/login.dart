@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ui_kit1/lib/services/auth_service.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -12,29 +11,27 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   bool _isLoading = false;
+  bool _obscurePassword = true; // 1. Added state to track password visibility
 
   void _handleLogin() async {
     setState(() => _isLoading = true);
 
-    // Call our AuthService
     String? error = await AuthService.login(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
     );
 
-    setState(() => _isLoading = false);
+    if (mounted) setState(() => _isLoading = false);
 
     if (error != null) {
-      // Show error message if login failed
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error), backgroundColor: Colors.red),
         );
       }
     }
-    // If error is null, it was successful!
-    // We DON'T need to navigate because main.dart's StreamBuilder will do it automatically!
   }
 
   @override
@@ -66,12 +63,25 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
+                obscureText: _obscurePassword, // 2. Connected to our state variable
                 decoration: InputDecoration(
                   labelText: "Password",
                   prefixIcon: const Icon(Icons.lock_outline),
+                  // 3. Added the interactive Eye icon!
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      // 4. Toggle the state when tapped
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                obscureText: true,
               ),
               const SizedBox(height: 24),
               SizedBox(

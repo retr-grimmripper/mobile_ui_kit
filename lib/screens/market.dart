@@ -31,12 +31,20 @@ class MarketScreen extends StatelessWidget {
       Product(id: "z1", name: "Premium Cloth Napkins", price: 59.99, imagePath: "assets/products/8.-Cloth-Napkins.png", ecoImpact: "Saves 100+ paper towels"),
       Product(id: "z2", name: "Reusable Beeswax Wraps", price: 85.50, imagePath: "assets/products/1.-Reusable-Beeswax-Food-Wraps.jpeg", ecoImpact: "Zero Plastic"),
       Product(id: "z3", name: "Stainless Steel Straws", price: 30.00, imagePath: "assets/products/12.-Stainless-Steel-Straws.jpeg", ecoImpact: "Ocean Friendly"),
+      Product(id: "z4", name: "Stainless Steel Straws", price: 30.00, imagePath: "assets/products/12.-Stainless-Steel-Straws.jpeg", ecoImpact: "Ocean Friendly"),
+      Product(id: "z5", name: "Stainless Steel Straws", price: 30.00, imagePath: "assets/products/12.-Stainless-Steel-Straws.jpeg", ecoImpact: "Ocean Friendly"),
+      Product(id: "z6", name: "Stainless Steel Straws", price: 30.00, imagePath: "assets/products/12.-Stainless-Steel-Straws.jpeg", ecoImpact: "Ocean Friendly"),
+
     ];
 
     final List<Product> ecoHome = [
       Product(id: "h1", name: "Glass Soap Dispensers", price: 120.00, imagePath: "assets/products/2.-Refillable-Glass-Soap-Dispensers.jpeg", ecoImpact: "Refillable"),
       Product(id: "h2", name: "Bamboo Toothbrushes", price: 30.00, imagePath: "assets/products/3.-Bamboo-Toothbrushes.jpeg", ecoImpact: "100% Biodegradable"),
       Product(id: "h3", name: "Eco Cleaning Kit", price: 101.75, imagePath: "assets/products/7.-Eco-Friendly-Cleaning-Products-2.png", ecoImpact: "Non-Toxic"),
+      Product(id: "h4", name: "Eco Cleaning Kit", price: 101.75, imagePath: "assets/products/7.-Eco-Friendly-Cleaning-Products-2.png", ecoImpact: "Non-Toxic"),
+      Product(id: "h5", name: "Eco Cleaning Kit", price: 101.75, imagePath: "assets/products/7.-Eco-Friendly-Cleaning-Products-2.png", ecoImpact: "Non-Toxic"),
+      Product(id: "h6", name: "Eco Cleaning Kit", price: 101.75, imagePath: "assets/products/7.-Eco-Friendly-Cleaning-Products-2.png", ecoImpact: "Non-Toxic"),
+
     ];
 
     return Scaffold(
